@@ -1,0 +1,13 @@
+test/
+*.o
+alist-to-pchk
+decode
+encode
+extract
+make-*
+pchk-to-alist
+print-gen
+print-pchk
+rand-src
+transmit
+verify
