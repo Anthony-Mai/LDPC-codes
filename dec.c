@@ -85,7 +85,7 @@ unsigned enum_decode
   int max_block		/* Maximize probability of whole block being correct? */
 )
 {
-  mod2dense *u, *v;
+  mod2dense *u=NULL, *v=NULL;
   double lk, maxlk, tpr;
   double *bpr, *lk0, *lk1;
   char sblk[31];

@@ -32,8 +32,8 @@ int main
   char **argv
 )
 {
-  char *tfile, *rfile;
-  FILE *tf, *rf;
+  char *tfile=NULL, *rfile=NULL;
+  FILE *tf=NULL, *rf=NULL;
   int block_size, n_bits;
   char junk;
   int seed;

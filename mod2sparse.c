@@ -963,11 +963,11 @@ int mod2sparse_decomp
   int abandon_when	/* When to abandon these columns */
 )
 {  
-  int *rinv, *cinv, *acnt, *rcnt;
+  int *rinv, *cinv, *acnt=NULL, *rcnt=NULL;
   mod2sparse *B;
   int M, N;
 
-  mod2entry *e, *f, *fn, *e2;
+  mod2entry *e=NULL, *f, *fn, *e2;
   int i, j, k, cc, cc2, cc3, cr2, pr;
   int found, nnf;
 

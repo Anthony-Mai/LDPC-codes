@@ -1,5 +1,10 @@
+debug/
+release/
 test/
+x64/
+.vs/
 *.o
+*.vcxproj.user
 alist-to-pchk
 decode
 encode

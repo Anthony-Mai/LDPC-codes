@@ -41,16 +41,16 @@ int main
   char **argv
 )
 {
-  char *pchk_file, *rfile, *dfile, *pfile;
+  char *pchk_file=NULL, *rfile=NULL, *dfile=NULL, *pfile=NULL;
   char **meth;
-  FILE *rf, *df, *pf;
+  FILE *rf=NULL, *df=NULL, *pf=NULL;
 
   char *dblk, *pchk;
   double *lratio;
   double *bitpr;
 
-  double *awn_data;		/* Places to store channel data */
-  int *bsc_data;
+  double *awn_data=NULL;		/* Places to store channel data */
+  int *bsc_data=NULL;
 
   unsigned iters;		/* Unsigned because can be huge for enum */
   double tot_iter;		/* Double because can be huge for enum */
