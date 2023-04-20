@@ -12,6 +12,9 @@
  * application.  All use of these programs is entirely at the user's own
  * risk.
  */
+#pragma once
+
+#include "mod2dense.h"
 
 void sparse_encode (char *, char *);
 void dense_encode  (char *, char *, mod2dense *, mod2dense *);

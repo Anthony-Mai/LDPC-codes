@@ -12,6 +12,9 @@
  * application.  All use of these programs is entirely at the user's own
  * risk.
  */
+#pragma once
+
+#include "mod2sparse.h"
 
 int check (mod2sparse *, char *, char *);
 

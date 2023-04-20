@@ -12,7 +12,10 @@
  * application.  All use of these programs is entirely at the user's own
  * risk.
  */
+#pragma once
 
+#include "mod2dense.h"
+#include "mod2sparse.h"
 
 void mod2sparse_to_dense (mod2sparse *, mod2dense *);
 void mod2dense_to_sparse (mod2dense *, mod2sparse *);
