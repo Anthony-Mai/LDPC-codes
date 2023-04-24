@@ -357,10 +357,9 @@ int main(int argc, char **argv) {
 
 done:
     fprintf(stderr,
-            "Decoded %d blocks, %d valid.  Average %.1f iterations, %.0f%% bit "
-            "changes\n",
+            "Decoded %d blocks, %d valid.  Average %.1f iterations, %1.2f%% bit changes (%d/%d)\n",
             block_no, tot_valid, (double)tot_iter / block_no,
-            100.0 * (double)tot_changed / (N * block_no));
+            100.0 * (double)tot_changed / (N * block_no), (int)tot_changed, (int)(N*block_no));
 
     if (ferror(df) || fclose(df) != 0) {
         fprintf(stderr, "Error writing decoded blocks to %s\n", dfile);

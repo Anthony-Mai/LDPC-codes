@@ -63,6 +63,8 @@ progs:	modules
 	$(LINK) decode.o channel.o mod2sparse.o mod2dense.o mod2convert.o \
 	   enc.o check.o \
 	   rcode.o rand.o alloc.o intio.o blockio.o dec.o open.o -lm -o decode
+	$(COMPILE) mbench.c
+	$(LINK) mbench.o open.o  alloc.o intio.o blockio.o channel.o rand.o  mod2sparse.o mod2dense.o mod2convert.o enc.o dec.o rcode.o check.o -lm -o mbench
 	$(COMPILE) extract.c
 	$(LINK) extract.o mod2sparse.o mod2dense.o mod2convert.o \
 	   rcode.o alloc.o intio.o blockio.o open.o -lm -o extract
