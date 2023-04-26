@@ -190,7 +190,7 @@ void make_ldpc(int seed,           /* Random number seed */
             cb_N += distrib_num(d, z) * part[z];
         }
 
-        u = chk_alloc(cb_N, sizeof *u);
+        u = (int*)chk_alloc(cb_N, sizeof *u);
 
         for (k = cb_N - 1; k >= 0; k--) {
             u[k] = k % M;
@@ -372,8 +372,8 @@ int *column_partition(
     int cur, used;
     int i, j;
 
-    trunc = chk_alloc(distrib_size(d), sizeof(double));
-    part = chk_alloc(distrib_size(d), sizeof(int));
+    trunc = (double*)chk_alloc(distrib_size(d), sizeof(double));
+    part = (int*)chk_alloc(distrib_size(d), sizeof(int));
 
     used = 0;
     for (i = 0; i < distrib_size(d); i++) {

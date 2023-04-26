@@ -16,6 +16,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "alloc.h"
 #include "intio.h"
@@ -109,8 +110,8 @@ int main(int argc, char **argv) {
 
     /* Allocate space for row and column permutations. */
 
-    cols = chk_alloc(N, sizeof *cols);
-    rows = chk_alloc(M, sizeof *rows);
+    cols = (int*)chk_alloc(N, sizeof *cols);
+    rows = (int*)chk_alloc(M, sizeof *rows);
 
     /* Create generator matrix with specified method. */
 
@@ -185,7 +186,7 @@ void make_dense_mixed(FILE *f, make_method method, char *other_gen_file) {
                     "Note: Parity check matrix has %d redundant checks\n", n);
         }
 
-        rows_inv = chk_alloc(M, sizeof *rows_inv);
+        rows_inv = (int*)chk_alloc(M, sizeof *rows_inv);
 
         for (i = 0; i < M; i++) {
             rows_inv[rows[i]] = i;

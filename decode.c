@@ -185,12 +185,12 @@ int main(int argc, char **argv) {
 
     switch (channel) {
     case BSC: {
-        bsc_data = chk_alloc(N, sizeof *bsc_data);
+        bsc_data = (int*)chk_alloc(N, sizeof *bsc_data);
         break;
     }
     case AWGN:
     case AWLN: {
-        awn_data = chk_alloc(N, sizeof *awn_data);
+        awn_data = (double*)chk_alloc(N, sizeof *awn_data);
         break;
     }
     default: {
@@ -200,10 +200,10 @@ int main(int argc, char **argv) {
 
     /* Allocate other space. */
 
-    dblk = chk_alloc(N, sizeof *dblk);
-    lratio = chk_alloc(N, sizeof *lratio);
-    pchk = chk_alloc(M, sizeof *pchk);
-    bitpr = chk_alloc(N, sizeof *bitpr);
+    dblk = (char*)chk_alloc(N, sizeof *dblk);
+    lratio = (double*)chk_alloc(N, sizeof *lratio);
+    pchk = (char*)chk_alloc(M, sizeof *pchk);
+    bitpr = (double*)chk_alloc(N, sizeof *bitpr);
 
     /* Print header for summary table. */
 

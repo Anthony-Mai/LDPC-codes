@@ -55,7 +55,7 @@ distrib *distrib_create
   /* Check for special case of a single number. */
 
   if (sscanf(c,"%d%c",&n,&junk)==1 && n>0)
-  { tstr = chk_alloc ( (int)(4.1+log10(n)), sizeof(*tstr));
+  { tstr = (char*)chk_alloc ( (int)(4.1+log10(n)), sizeof(*tstr));
     sprintf(tstr,"1x%d",n);
     d = distrib_create(tstr);
     free(tstr);
@@ -68,7 +68,7 @@ distrib *distrib_create
   size = 0;
   sum = 0;
 
-  d = chk_alloc(1, sizeof *d);
+  d = (distrib*)chk_alloc(1, sizeof *d);
 
   for (;;)
   { 
@@ -95,7 +95,7 @@ distrib *distrib_create
   /* Allocate memory for the list and fill it in */
 
   d->size = size;
-  d->list = chk_alloc (size, sizeof(distrib_entry));
+  d->list = (distrib_entry*)chk_alloc (size, sizeof(distrib_entry));
 
   i = 0;
   str = c;

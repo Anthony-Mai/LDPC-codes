@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
-    cblk = chk_alloc(N, sizeof *cblk);
+    cblk = (char*)chk_alloc(N, sizeof *cblk);
 
     for (;;) {
         /* Read block from coded file. */

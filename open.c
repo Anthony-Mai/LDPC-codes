@@ -25,11 +25,10 @@
    whether the mode is for reading or writing.  Otherwise, fopen is called. 
 */
 
-FILE *open_file_std
-( char *fname,	/* Name of file to open, or "-" for stdin/stdout */
-  char *mode	/* Mode for opening: eg, "r" or "w" */
-)
-{ 
+FILE *open_file_std(
+  const char *fname,	/* Name of file to open, or "-" for stdin/stdout */
+  const char *mode	/* Mode for opening: eg, "r" or "w" */
+) {
   if (strcmp(fname,"-")==0)
   { switch (mode[0])
     { case 'r': 

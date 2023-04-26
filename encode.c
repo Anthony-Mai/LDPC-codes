@@ -118,9 +118,9 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
-    sblk = chk_alloc(N - M, sizeof *sblk);
-    cblk = chk_alloc(N, sizeof *cblk);
-    chks = chk_alloc(M, sizeof *chks);
+    sblk = (char*)chk_alloc(N - M, sizeof *sblk);
+    cblk = (char*)chk_alloc(N, sizeof *cblk);
+    chks = (char*)chk_alloc(M, sizeof *chks);
 
     /* Encode successive blocks. */
 

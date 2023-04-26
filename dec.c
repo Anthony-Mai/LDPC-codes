@@ -95,10 +95,10 @@ unsigned enum_decode(
 
     bpr = bitpr;
     if (bpr == 0 && max_block == 0) {
-        bpr = chk_alloc(N, sizeof *bpr);
+        bpr = (double*)chk_alloc(N, sizeof *bpr);
     }
 
-    cblk = chk_alloc(N, sizeof *cblk);
+    cblk = (char*)chk_alloc(N, sizeof *cblk);
 
     if (type == 'd') {
         u = mod2dense_allocate(N - M, 1);
@@ -110,8 +110,8 @@ unsigned enum_decode(
         v = mod2dense_allocate(M, 1);
     }
 
-    lk0 = chk_alloc(N, sizeof *lk0);
-    lk1 = chk_alloc(N, sizeof *lk1);
+    lk0 = (double*)chk_alloc(N, sizeof *lk0);
+    lk1 = (double*)chk_alloc(N, sizeof *lk1);
 
     /* Pre-compute likelihoods for bits. */
 

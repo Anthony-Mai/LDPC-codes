@@ -47,7 +47,7 @@ mod2dense *G; /* Dense or mixed representation of generator matrix,
    error is encountered, a message is displayed on standard error, and the
    program is terminated. */
 
-void read_pchk(char *pchk_file) {
+void read_pchk(const char *pchk_file) {
     FILE *f;
 
     f = open_file_std(pchk_file, "rb");
@@ -88,7 +88,7 @@ void read_pchk(char *pchk_file) {
    If an error is encountered, a message is displayed on standard error,
    and the program is terminated. */
 
-void read_gen(char *gen_file,  /* Name of generator matrix file */
+void read_gen(const char *gen_file,  /* Name of generator matrix file */
               int cols_only,   /* Read only column ordering? */
               int no_pchk_file /* No parity check file used? */
 ) {
@@ -129,8 +129,8 @@ void read_gen(char *gen_file,  /* Name of generator matrix file */
         }
     }
 
-    cols = chk_alloc(N, sizeof *cols);
-    rows = chk_alloc(M, sizeof *rows);
+    cols = (int*)chk_alloc(N, sizeof *cols);
+    rows = (int*)chk_alloc(M, sizeof *rows);
 
     for (i = 0; i < N; i++) {
         cols[i] = intio_read(f);

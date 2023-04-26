@@ -24,8 +24,8 @@
 # make things more complex and error-prone.
 
 
-COMPILE = cc -c -O    # Command to compile a module from .c to .o
-LINK =    cc          # Command to link a program
+COMPILE = g++ -c -O    # Command to compile a module from .c to .o
+LINK =    g++          # Command to link a program
 
 
 # MAKE ALL THE MAIN PROGRAMS.  First makes the modules used.
@@ -63,7 +63,7 @@ progs:	modules
 	$(LINK) decode.o channel.o mod2sparse.o mod2dense.o mod2convert.o \
 	   enc.o check.o \
 	   rcode.o rand.o alloc.o intio.o blockio.o dec.o open.o -lm -o decode
-	$(COMPILE) mbench.c
+	$(COMPILE) mbench.cpp
 	$(LINK) mbench.o open.o  alloc.o intio.o blockio.o channel.o rand.o  mod2sparse.o mod2dense.o mod2convert.o enc.o dec.o rcode.o check.o -lm -o mbench
 	$(COMPILE) extract.c
 	$(LINK) extract.o mod2sparse.o mod2dense.o mod2convert.o \

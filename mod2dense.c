@@ -37,16 +37,16 @@ mod2dense *mod2dense_allocate(int n_rows, /* Number of rows in matrix */
         exit(1);
     }
 
-    m = chk_alloc(1, sizeof *m);
+    m = (mod2dense*)chk_alloc(1, sizeof *m);
 
     m->n_rows = n_rows;
     m->n_cols = n_cols;
 
     m->n_words = (n_rows + mod2_wordsize - 1) >> mod2_wordsize_shift;
 
-    m->col = chk_alloc(m->n_cols, sizeof *m->col);
+    m->col = (mod2word**)chk_alloc(m->n_cols, sizeof *m->col);
 
-    m->bits = chk_alloc(m->n_words * m->n_cols, sizeof *m->bits);
+    m->bits = (mod2word*)chk_alloc(m->n_words * m->n_cols, sizeof *m->bits);
 
     for (j = 0; j < m->n_cols; j++) {
         m->col[j] = m->bits + j * m->n_words;

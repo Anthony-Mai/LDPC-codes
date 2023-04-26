@@ -12,5 +12,15 @@
  * application.  All use of these programs is entirely at the user's own
  * risk.
  */
+#pragma once
 
-FILE *open_file_std (char *, char *);
+#ifdef __cplusplus
+extern "C" {
+#endif //__cplusplus
+
+FILE *open_file_std (const char *, const char *);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif //__cplusplus
+

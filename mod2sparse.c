@@ -35,7 +35,7 @@ static mod2entry *alloc_entry(mod2sparse *m) {
     int k;
 
     if (m->next_free == 0) {
-        b = chk_alloc(1, sizeof *b);
+        b = (mod2block*)chk_alloc(1, sizeof *b);
 
         b->next = m->blocks;
         m->blocks = b;
@@ -70,13 +70,13 @@ mod2sparse *mod2sparse_allocate(int n_rows, /* Number of rows in matrix */
         exit(1);
     }
 
-    m = chk_alloc(1, sizeof *m);
+    m = (mod2sparse*)chk_alloc(1, sizeof *m);
 
     m->n_rows = n_rows;
     m->n_cols = n_cols;
 
-    m->rows = chk_alloc(n_rows, sizeof *m->rows);
-    m->cols = chk_alloc(n_cols, sizeof *m->cols);
+    m->rows = (mod2entry*)chk_alloc(n_rows, sizeof *m->rows);
+    m->cols = (mod2entry*)chk_alloc(n_cols, sizeof *m->cols);
 
     m->blocks = 0;
     m->next_free = 0;
@@ -890,15 +890,15 @@ int mod2sparse_decomp(
         exit(1);
     }
 
-    rinv = chk_alloc(M, sizeof *rinv);
-    cinv = chk_alloc(N, sizeof *cinv);
+    rinv = (int*)chk_alloc(M, sizeof *rinv);
+    cinv = (int*)chk_alloc(N, sizeof *cinv);
 
     if (abandon_number > 0) {
-        acnt = chk_alloc(M + 1, sizeof *acnt);
+        acnt = (int*)chk_alloc(M + 1, sizeof *acnt);
     }
 
     if (strategy == Mod2sparse_minprod) {
-        rcnt = chk_alloc(M, sizeof *rcnt);
+        rcnt = (int*)chk_alloc(M, sizeof *rcnt);
     }
 
     mod2sparse_clear(L);

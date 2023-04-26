@@ -12,7 +12,11 @@
  * application.  All use of these programs is entirely at the user's own
  * risk.
  */
+#pragma once
 
+#ifdef __cplusplus
+extern "C" {
+#endif //__cplusplus
 
 /* VARIABLES HOLDING DATA READ.  These are declared for real in rcode.c. */
 
@@ -33,5 +37,10 @@ extern mod2dense *G;	/* Dense or mixed representation of generator matrix,
 
 /* PROCEDURES FOR READING DATA. */
 
-void read_pchk (char *);
-void read_gen  (char *, int, int);
+void read_pchk (const char *);
+void read_gen  (const char *, int, int);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif //__cplusplus
+

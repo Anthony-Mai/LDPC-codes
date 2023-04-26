@@ -36,8 +36,8 @@ void sparse_encode(char *sblk, char *cblk) {
     mod2entry *e;
     char *x, *y;
 
-    x = chk_alloc(M, sizeof *x);
-    y = chk_alloc(M, sizeof *y);
+    x = (char*)chk_alloc(M, sizeof *x);
+    y = (char*)chk_alloc(M, sizeof *y);
 
     /* Multiply the vector of source bits by the systematic columns of the
        parity check matrix, giving x.  Also copy these bits to the coded block.
