@@ -107,9 +107,9 @@ int main(int argc, char **argv) {
             pchk_file = argv[++i]; break;
         case 'm':
         case 'M':
-            if (0 == _stricmp(argv[i + 1], "prprp")) dec_method = Prprp;
-            else if (0 == _stricmp(argv[i + 1], "enum_block")) dec_method = Enum_block;
-            else if (0 == _stricmp(argv[i + 1], "enum_bit")) dec_method = Enum_bit;
+            if (0 == strcasecmp(argv[i + 1], "prprp")) dec_method = Prprp;
+            else if (0 == strcasecmp(argv[i + 1], "enum_block")) dec_method = Enum_block;
+            else if (0 == strcasecmp(argv[i + 1], "enum_bit")) dec_method = Enum_bit;
             else dec_method = Prprp;
             i++; break;
         case 's':
