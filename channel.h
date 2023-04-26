@@ -12,12 +12,16 @@
  * application.  All use of these programs is entirely at the user's own
  * risk.
  */
-
+#pragma once
 
 /* TYPES OF CHANNEL, AND CHANNEL PARAMETERS.  The global variables declared
    here are located in channel.c. */
 
 typedef enum { BSC, AWGN, AWLN } channel_type;
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
 
 extern channel_type channel;	/* Type of channel */
 
@@ -30,3 +34,7 @@ extern double lwidth;		/* Width of noise distributoin for AWLN */
 
 int  channel_parse (char **, int);
 void channel_usage (void);
+
+#ifdef __cplusplus
+} //extern "C"
+#endif // __cplusplus

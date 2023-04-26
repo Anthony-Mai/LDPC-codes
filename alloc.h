@@ -12,7 +12,15 @@
  * application.  All use of these programs is entirely at the user's own
  * risk.
  */
+#pragma once
 
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
 
 void *chk_alloc (unsigned, unsigned);	/* Calls 'calloc' and exits with error
                                            if it fails */
+
+#ifdef __cplusplus
+} //extern "C"
+#endif // __cplusplus

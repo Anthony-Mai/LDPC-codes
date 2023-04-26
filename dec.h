@@ -12,6 +12,7 @@
  * application.  All use of these programs is entirely at the user's own
  * risk.
  */
+#pragma once
 
 
 /* DECODING METHOD, ITS PARAMETERS, AND OTHER VARIABLES.  The global variables 
@@ -20,6 +21,10 @@
 typedef enum 
 { Enum_block, Enum_bit, Prprp
 } decoding_method;
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
 
 extern decoding_method dec_method; /* Decoding method to use */
 
@@ -41,3 +46,7 @@ unsigned prprp_decode
 
 void initprp (mod2sparse *, double *, char *, double *);
 void iterprp (mod2sparse *, double *, char *, double *);
+
+#ifdef __cplusplus
+} //extern "C"
+#endif // __cplusplus

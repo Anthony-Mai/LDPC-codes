@@ -16,6 +16,10 @@
 
 #include "mod2sparse.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
 int check (mod2sparse *, char *, char *);
 
 double changed (double *, char *, int);
@@ -26,3 +30,7 @@ double loglikelihood (double *, char *, int);
 double expected_loglikelihood (double *, double *, int);
 
 double entropy (double *, int);
+
+#ifdef __cplusplus
+} //extern "C"
+#endif // __cplusplus
