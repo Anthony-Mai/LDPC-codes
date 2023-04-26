@@ -34,6 +34,10 @@
 
 #include "rcode.h"
 
+#if defined(_WIN32) || defined(_WIN64)
+#define strcasecmp _stricmp
+#endif //defined(_WIN32) || defined(_WIN64)
+
 static void usage(char* argv[]);
 
 /* MAIN PROGRAM. */
