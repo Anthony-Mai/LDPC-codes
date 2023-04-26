@@ -34,14 +34,13 @@
 
 #include "rcode.h"
 
-
-void usage(void);
+static void usage(char* argv[]);
 
 /* MAIN PROGRAM. */
 
 int main(int argc, char **argv) {
     const char* pchk_file = NULL;
-    const char *tfile = NULL, *rfile = NULL;
+    const char* tfile = NULL; //*rfile = NULL;
     FILE *tf = NULL, *rf = NULL;
     int i, j, it, block_size=0, n_bits=0, nIt=100;
     char junk;
@@ -64,6 +63,10 @@ int main(int argc, char **argv) {
     uint64_t inBlock[16];
     float tranBlock[1024];
 
+    if (argc == 1) {
+        usage(argv); return 0;
+    }
+
     memset(inBlock, 0, sizeof(inBlock));
     memset(tranBlock, 0, sizeof(tranBlock));
 
@@ -71,16 +74,59 @@ int main(int argc, char **argv) {
     max_iter = 20;
 
     // Look at arguments.  The arguments specifying the channel are looked at by channel_parse in channel.c
-
-    if (!(tfile = argv[1]) || !(rfile = argv[2]) || !argv[3] ||
-        sscanf(argv[3], "%d%c", &seed, &junk) != 1) {
-        usage();
+    for (i = 1; i < argc; i++) {
+        if (argv[i][0] != '-') {
+            if (tfile == nullptr) { tfile = argv[i]; }
+            continue;
+        }
+        if (i + 2 > argc) continue;
+        switch (argv[i][1]) {
+        case 'i':
+        case 'I':
+            sscanf(argv[++i], "%d", &max_iter); break;
+        case 'n':
+        case 'N':
+            sscanf(argv[++i], "%d", &nIt); break;
+        case 'a':
+        case 'A':
+            if ((argv[i][3] & 0xDF) == 'L') {
+                channel = AWLN;
+                sscanf(argv[++i], "%lf", &lwidth);
+            } else {
+                channel = AWGN;
+                sscanf(argv[++i], "%lf", &std_dev);
+            }
+            break;
+        case 'b': // bsc
+        case 'B':
+            channel = BSC;
+            sscanf(argv[++i], "%lf", &error_prob);
+            break;
+        case 'p':
+        case 'P':
+            pchk_file = argv[++i]; break;
+        case 'm':
+        case 'M':
+            if (0 == _stricmp(argv[i + 1], "prprp")) dec_method = Prprp;
+            else if (0 == _stricmp(argv[i + 1], "enum_block")) dec_method = Enum_block;
+            else if (0 == _stricmp(argv[i + 1], "enum_bit")) dec_method = Enum_bit;
+            else dec_method = Prprp;
+            i++; break;
+        case 's':
+        case 'S':
+            sscanf(argv[++i], "%d", &seed); break;
+        }
     }
 
-    n = channel_parse(argv + 4, argc - 4);
-    if (n <= 0 /* || argc - 4 - n != 0*/) {
-        usage();
-    }
+    //if (!(tfile = argv[1]) || !argv[2] ||
+    //    sscanf(argv[2], "%d%c", &seed, &junk) != 1) {
+    //    usage();
+    //}
+
+    //n = channel_parse(argv + 4, argc - 4);
+    //if (n <= 0 /* || argc - 4 - n != 0*/) {
+    //    usage();
+    //}
 
     /* See if the source is all zeros or a file. */
 
@@ -307,17 +353,22 @@ int main(int argc, char **argv) {
         // Finish a round of decoding
     }
 
-    printf("\nStd_dev=%1.3f. Total valid blocks %d out of %d. Total bits changed %d.\n", std_dev, tot_valid, nIt, (int)tot_changed);
+    printf("\nStd_dev=%1.3f. Total valid blocks %d out of %d (%2.3f%%). Total bits changed %d.\n", std_dev, tot_valid, nIt, float(tot_valid)*100.0f/nIt, (int)tot_changed);
 
     return 0;
 }
 
 /* PRINT USAGE MESSAGE AND EXIT. */
 
-void usage(void) {
-    fprintf(
-        stderr,
-        "Usage:   transmit encoded-file|n-zeros received-file seed channel\n");
+void usage(char* argv[]) {
+    printf(
+        "Usage: %s encode_file [-N rounds] [-Seed ###] [-PCHK pchk_file] [-AWGN/AWLN/BSC #.#] [-prprp/enum_block/enum_bit] [-it ##]\n", argv[0]);
+    printf("    -N 1000    Run 1000 rounds of random decoding.\n");
+    printf("    -S 1234    Give a pseudo random number seed.\n");
+    printf("    -PCHK file.pchk    Provide a *.pchk file.\n");
+    printf("    -[AWGN/AWLN/BSC] 0.10    Provide a channel mode with parameter.\n");
+    printf("    -[PRPRP/ENUM_BLOCK/ENUM_BIT]    Provide the decode method to use.\n");
+    printf("    -IT 20    Specify number of maxium decode iterations.\n");
     channel_usage();
     exit(1);
 }
