@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
     const char* pchk_file = NULL;
     const char* tfile = NULL; //*rfile = NULL;
     FILE *tf = NULL, *rf = NULL;
-    int i, j, it, block_size=0, n_bits=0, nIt=100;
+    int i, j, it, block_size=0, n_bits=0, nIt=100, nErrs=0;
     char junk;
     int seed;
     int cnt;
@@ -233,7 +233,7 @@ int main(int argc, char **argv) {
             for (i = 0; i < n_bits; i++) {
                 b = (inBlock[i >> 6] >> (i & 63)) & 1;
                 bsc_noise = (rand_uniform() < error_prob) ? 1 : 0;
-                pOut[i] = (b ^ bsc_noise);
+                pOut[i] = (b ^ bsc_noise); nErrs += bsc_noise;
             }
             break;
         }
@@ -243,6 +243,8 @@ int main(int argc, char **argv) {
                 b = (inBlock[i >> 6] >> (i & 63)) & 1;
                 awgn_noise = std_dev * rand_gaussian();
                 tranBlock[i] = b ? 1.0f + awgn_noise : -1.0f + awgn_noise;
+                if (b) { if (tranBlock[i] < 0.0f) nErrs++; }
+                else { if (tranBlock[i] > 0.0f) nErrs++; }
             }
             break;
         }
@@ -252,6 +254,8 @@ int main(int argc, char **argv) {
                 b = (inBlock[i >> 6] >> (i & 63)) & 1;
                 awln_noise = lwidth * rand_logistic();
                 tranBlock[i] = b ? 1.0f + awln_noise : -1.0f + awln_noise;
+                if (b) { if (tranBlock[i] < 0.0f) nErrs++; }
+                else { if (tranBlock[i] > 0.0f) nErrs++; }
             }
             break;
         }
@@ -357,7 +361,7 @@ int main(int argc, char **argv) {
         // Finish a round of decoding
     }
 
-    printf("\nStd_dev=%1.3f. Total valid blocks %d out of %d (%2.3f%%). Total bits changed %d.\n", std_dev, tot_valid, nIt, float(tot_valid)*100.0f/nIt, (int)tot_changed);
+    printf("\n%s=%1.3f. Total valid blocks %d out of %d (%2.3f%%). Total bit errors %d (%1.3f).\n", (channel==BSC)?"BSC err_prb":"AWGN std_dev", (channel==BSC)?error_prob:std_dev, tot_valid, nIt, float(tot_valid)*100.0f/nIt, (int)nErrs, float(nErrs)/548.0f/nIt);
 
     return 0;
 }
