@@ -43,7 +43,7 @@ static void usage(char* argv[]);
 /* MAIN PROGRAM. */
 
 int main(int argc, char **argv) {
-    const char* pchk_file = NULL;
+    const char* pchk_file = "frame3.pchk";
     const char* tfile = NULL; //*rfile = NULL;
     FILE *tf = NULL, *rf = NULL;
     int i, j, it, block_size=0, n_bits=0, nIt=100, nErrs=0;
@@ -108,7 +108,12 @@ int main(int argc, char **argv) {
             break;
         case 'p':
         case 'P':
-            pchk_file = argv[++i]; break;
+            if ((argv[i][2] & 0xDF) == 'C') {
+                pchk_file = argv[++i];
+            } else if ((argv[i][2] & 0xDF) == 'R') {
+                dec_method = Prprp;
+            }
+            break;
         case 'm':
         case 'M':
             if (0 == strcasecmp(argv[i + 1], "prprp")) dec_method = Prprp;
@@ -165,8 +170,6 @@ int main(int argc, char **argv) {
     fclose(tf); tf = NULL;
 
     // Read parity check file.
-    pchk_file = "frame3.pchk"; // TODO: get from command line.
-
     read_pchk(pchk_file);
 
     if (N <= M) {
@@ -375,7 +378,7 @@ void usage(char* argv[]) {
     printf("    -S 1234    Give a pseudo random number seed.\n");
     printf("    -PCHK file.pchk    Provide a *.pchk file.\n");
     printf("    -[AWGN/AWLN/BSC] 0.10    Provide a channel mode with parameter.\n");
-    printf("    -[PRPRP/ENUM_BLOCK/ENUM_BIT]    Provide the decode method to use.\n");
+    printf("    -M [PRPRP/ENUM_BLOCK/ENUM_BIT]    Provide the decode method to use.\n");
     printf("    -IT 20    Specify number of maxium decode iterations.\n");
     channel_usage();
     exit(1);
