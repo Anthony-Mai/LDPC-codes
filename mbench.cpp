@@ -64,8 +64,8 @@ int main(int argc, char **argv) {
 
     int tot_valid, valid;
 
-    uint64_t inBlock[16];
-    float tranBlock[1024];
+    uint64_t inBlock[20];
+    float tranBlock[1280];
 
     if (argc == 1) {
         usage(argv); return 0;
@@ -171,6 +171,11 @@ int main(int argc, char **argv) {
 
     // Read parity check file.
     read_pchk(pchk_file);
+
+    if (N > sizeof(inBlock)*8) {
+        fprintf(stderr, "Please increase buffer inBlock and tranBlock based on N=%d\n", N);
+        return -1;
+    }
 
     if (N <= M) {
         fprintf(stderr,
