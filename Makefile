@@ -71,7 +71,8 @@ progs:	modules
 	$(COMPILE) verify.c
 	$(LINK) verify.o mod2sparse.o mod2dense.o mod2convert.o check.o \
 	   rcode.o alloc.o intio.o blockio.o open.o -lm -o verify
-
+	$(COMPILE) genmax.cpp
+	$(LINK) genmax.o -lm -o genmax
 
 # MAKE THE TEST PROGRAMS.  First makes the modules used.
 

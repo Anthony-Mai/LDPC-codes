@@ -369,7 +369,8 @@ int main(int argc, char **argv) {
         // Finish a round of decoding
     }
 
-    printf("\n%s=%1.3f. Total valid blocks %d out of %d (%2.3f%%). Total bit errors %d (%1.3f).", (channel==BSC)?"BSC err_prb":"AWGN std_dev", (channel==BSC)?error_prob:std_dev, tot_valid, nIt, float(tot_valid)*100.0f/nIt, (int)nErrs, float(nErrs)/548.0f/nIt);
+    printf("\n%s=%1.3f. Valid blocks %d of %d (%2.3f%%)(FER=%1.3e). Bit errors %d (%1.3f).", (channel==BSC)?"BSC err_prb":"AWGN std_dev",
+        (channel==BSC)?error_prob:std_dev, tot_valid, nIt, float(tot_valid)*100.0f/nIt, float(nIt-tot_valid)/nIt, (int)nErrs, float(nErrs)/548.0f/nIt);
     if (channel==AWGN) printf(" Eb/N0 = %1.3f dB. Es/N0 = %1.3f dB", 10.0f*logf(0.5f*N/(N-M)/(std_dev*std_dev))/logf(10.f), 10.0f*logf(0.5f/(std_dev*std_dev))/logf(10.f));
     printf("\n");
 
