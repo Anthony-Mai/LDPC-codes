@@ -120,7 +120,7 @@ void GenStar272(const char* fileName) {
     }
     for (i=0; i<17; i++) {
         s = i; // Slope.
-        S[0].reset();
+        S[i].reset();
         for (j=0; j<17; j++) {
             u320 t; t.reset();
             for (x=0,y=j; x<17; x++,y+=s) {
@@ -131,6 +131,7 @@ void GenStar272(const char* fileName) {
             if (j<16) {
                 D[(i+17)*16+j] = t;
             } else {
+                S[i] = t;
                 for (k=0; k<16; k++) {
                     D[(i+17)*16+k] ^= t;
                 }
