@@ -698,7 +698,7 @@ void mod2sparse_multiply(mod2sparse *m1, /* Left operand of multiply */
 /* MULTIPLY VECTOR BY SPARSE MATRIX. */
 
 void mod2sparse_mulvec(
-    mod2sparse *m, /* The sparse matrix, with M rows and N columns */
+    const mod2sparse *m, /* The sparse matrix, with M rows and N columns */
     char *u,       /* The input vector, N long */
     char *v        /* Place to store the result, M long */
 ) {

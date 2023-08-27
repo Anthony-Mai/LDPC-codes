@@ -23,7 +23,7 @@
 /* COMPUTE PARITY CHECKS.  Returns the number of parity checks violated by
    dblk.  The results of all the parity checks are stored in pchk. */
 
-int check(mod2sparse *H, /* Parity check matrix */
+int check(const mod2sparse *H, /* Parity check matrix */
           char *dblk,    /* Guess for codeword */
           char *pchk     /* Place to store parity checks */
 ) {
@@ -67,7 +67,7 @@ double changed(double *lratio, /* Likelihood ratios for bits */
    given by the bit probabilities passed, with bits assumed to be independent.
  */
 
-double expected_parity_errors(mod2sparse *H, /* Parity check matrix */
+double expected_parity_errors(const mod2sparse *H, /* Parity check matrix */
                               double *bpr    /* Bit probabilities */
 ) {
     mod2entry *f;

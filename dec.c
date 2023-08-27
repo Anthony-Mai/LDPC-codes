@@ -244,7 +244,7 @@ void prprp_decode_setup(void) {
     }
 }
 
-unsigned prprp_decode(mod2sparse *H,  /* Parity check matrix */
+unsigned prprp_decode(const mod2sparse *H,  /* Parity check matrix */
                       double *lratio, /* Likelihood ratios for bits */
                       char *dblk,     /* Place to store decoding */
                       char *pchk,     /* Place to store parity checks */
@@ -286,7 +286,7 @@ unsigned prprp_decode(mod2sparse *H,  /* Parity check matrix */
    and guess at decoding. */
 
 void initprp(
-    mod2sparse *H,  /* Parity check matrix */
+    const mod2sparse *H,  /* Parity check matrix */
     double *lratio, /* Likelihood ratios for bits */
     char *dblk,     /* Place to store decoding */
     double *bprb    /* Place to store bit probabilities, 0 if not wanted */
@@ -312,8 +312,8 @@ void initprp(
 /* DO ONE ITERATION OF PROBABILITY PROPAGATION. */
 
 void iterprp(
-    mod2sparse *H,  /* Parity check matrix */
-    double *lratio, /* Likelihood ratios for bits */
+    const mod2sparse *H,  /* Parity check matrix */
+    const double *lratio, /* Likelihood ratios for bits */
     char *dblk,     /* Place to store decoding */
     double *bprb    /* Place to store bit probabilities, 0 if not wanted */
 ) {

@@ -41,11 +41,10 @@ void enum_decode_setup (void);
 unsigned enum_decode (double *, char *, double *, int);
 
 void prprp_decode_setup (void);
-unsigned prprp_decode 
-(mod2sparse *, double *, char *, char *, double *);
+unsigned prprp_decode(const mod2sparse *, double *, char *, char *, double *);
 
-void initprp (mod2sparse *, double *, char *, double *);
-void iterprp (mod2sparse *, double *, char *, double *);
+void initprp (const mod2sparse *, double *, char *, double *);
+void iterprp (const mod2sparse *, const double *, char *, double *);
 
 #ifdef __cplusplus
 } //extern "C"

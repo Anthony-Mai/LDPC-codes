@@ -42,6 +42,8 @@ static void usage(char* argv[]);
 
 /* MAIN PROGRAM. */
 
+uint32_t gFalsePositive = 0;
+
 int main(int argc, char **argv) {
     const char* pchk_file = "frame3.pchk";
     const char* tfile = NULL; //*rfile = NULL;
@@ -65,6 +67,7 @@ int main(int argc, char **argv) {
     int tot_valid, valid;
 
     uint64_t inBlock[20];
+    char rawBlock[1280];
     float tranBlock[1280];
 
     if (argc == 1) {
@@ -159,10 +162,12 @@ int main(int argc, char **argv) {
         b = getc(tf);
         if (b == '1') {
             inBlock[n_bits >> 6] ^= (1llu << (n_bits & 63));
+            rawBlock[n_bits] = 0x01;
             n_bits++; continue;
         }
 
         if (b == '0') {
+            rawBlock[n_bits] = 0x00;
             n_bits++; continue;
         }
         if (b == EOF) break;
@@ -228,6 +233,7 @@ int main(int argc, char **argv) {
     // Set random seed to avoid duplications with other programs.
     rand_seed(10 * seed + 3);
 
+    gFalsePositive = 0;
     tot_iter = 0;
     tot_valid = 0;
     tot_changed = 0;
@@ -343,6 +349,12 @@ int main(int argc, char **argv) {
 
         // See if it worked, and how many bits were changed.
         valid = check(H, dblk, pchk) == 0;
+        if (valid) {
+            if (memcmp(dblk, rawBlock, N)) {
+                printf("    False success decoding detected.\n");
+                gFalsePositive ++;
+            }
+        }
 
         chngd = changed(lratio, dblk, N);
 
@@ -373,6 +385,9 @@ int main(int argc, char **argv) {
         (channel==BSC)?error_prob:std_dev, tot_valid, nIt, float(tot_valid)*100.0f/nIt, float(nIt-tot_valid)/nIt, (int)nErrs, float(nErrs)/548.0f/nIt);
     if (channel==AWGN) printf(" Eb/N0 = %1.3f dB. Es/N0 = %1.3f dB", 10.0f*logf(0.5f*N/(N-M)/(std_dev*std_dev))/logf(10.f), 10.0f*logf(0.5f/(std_dev*std_dev))/logf(10.f));
     printf("\n");
+    if (gFalsePositive) {
+        printf("There are %d frames decoded valid (all parity check OK) but is wrong.\n", gFalsePositive);
+    }
 
     return 0;
 }

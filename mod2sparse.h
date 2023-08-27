@@ -131,7 +131,7 @@ void mod2sparse_delete(mod2sparse *, mod2entry *);
 void mod2sparse_transpose(mod2sparse *, mod2sparse *);
 void mod2sparse_add(mod2sparse *, mod2sparse *, mod2sparse *);
 void mod2sparse_multiply(mod2sparse *, mod2sparse *, mod2sparse *);
-void mod2sparse_mulvec(mod2sparse *, char *, char *);
+void mod2sparse_mulvec(const mod2sparse *, char *, char *);
 
 int mod2sparse_equal(mod2sparse *, mod2sparse *);
 

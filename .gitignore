@@ -5,10 +5,16 @@ x64/
 .vs/
 *.o
 *.vcxproj.user
+*.bin
+*.gen
+*.pchk
+*.txt
 alist-to-pchk
 decode
 encode
 extract
+genmax
+mbench
 make-*
 pchk-to-alist
 print-gen
