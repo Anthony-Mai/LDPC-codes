@@ -53,6 +53,7 @@ int main(int argc, char **argv) {
     int seed;
     int cnt;
     int n, b;
+    int resErr = 0;
     char* dblk, * pchk;
     double* lratio;
     double* bitpr;
@@ -238,6 +239,8 @@ int main(int argc, char **argv) {
     tot_valid = 0;
     tot_changed = 0;
 
+    printf("\n");
+
     // Create transmission and apply noise
     for (it = 0; it < nIt; it++) {
         switch (channel) {
@@ -353,12 +356,18 @@ int main(int argc, char **argv) {
             if (memcmp(dblk, rawBlock, N)) {
                 printf("    False success decoding detected.\n");
                 gFalsePositive ++;
+                valid = 0;
+            }
+        }
+        if (!valid) {
+            for (i=0; i<N; i++) {
+                resErr += ((dblk[i]^rawBlock[i])&1u);
             }
         }
 
         chngd = changed(lratio, dblk, N);
 
-        printf("Try No. %d: block decoded %s, bit changed %d\n", it, valid?"valid":"invalid", (int)chngd);
+        printf("\rTry No. %d: block decoded %s, bit changed %d", it, valid?"valid":"invalid", (int)chngd);
 
         tot_iter += iters;
         tot_valid += valid;
@@ -380,11 +389,11 @@ int main(int argc, char **argv) {
 
         // Finish a round of decoding
     }
-
+    printf("\n");
     printf("\n[%d/%d] %s=%1.3f. Valid blocks %d of %d (%2.3f%%)(FER=%1.3e). Bit errors %d (%2.3f%%).", M, N, (channel==BSC)?"BSC err_prb":"AWGN std_dev",
         (channel==BSC)?error_prob:std_dev, tot_valid, nIt, float(tot_valid)*100.0f/nIt, float(nIt-tot_valid)/nIt, (int)nErrs, float(nErrs)*100.0f/float(N)/nIt);
     if (channel==AWGN) printf(" Eb/N0 = %1.3f dB. Es/N0 = %1.3f dB", 10.0f*logf(0.5f*N/(N-M)/(std_dev*std_dev))/logf(10.f), 10.0f*logf(0.5f/(std_dev*std_dev))/logf(10.f));
-    printf("\n");
+    printf("\nResidual BER %1.3e (%d/%lld)\n", float(resErr)/float(N)/nIt, resErr, int64_t(N)*nIt);
     if (gFalsePositive) {
         printf("There are %d frames decoded valid (all parity check OK) but is wrong.\n", gFalsePositive);
     }
