@@ -390,8 +390,8 @@ int main(int argc, char **argv) {
         // Finish a round of decoding
     }
     printf("\n");
-    printf("\n[%d/%d] %s=%1.3f. Valid blocks %d of %d (%2.3f%%)(FER=%1.3e). Bit errors %d (%2.3f%%).", M, N, (channel==BSC)?"BSC err_prb":"AWGN std_dev",
-        (channel==BSC)?error_prob:std_dev, tot_valid, nIt, float(tot_valid)*100.0f/nIt, float(nIt-tot_valid)/nIt, (int)nErrs, float(nErrs)*100.0f/float(N)/nIt);
+    printf("\n[%d/%d] %s=%1.3f. Valid blocks %d of %d (%2.3f%%)(FER=%1.3e). Bit errors %d (%1.3e).", M, N, (channel==BSC)?"BSC err_prb":"AWGN std_dev",
+        (channel==BSC)?error_prob:std_dev, tot_valid, nIt, float(tot_valid)*100.0f/nIt, float(nIt-tot_valid)/nIt, (int)nErrs, float(nErrs)/float(N)/nIt);
     if (channel==AWGN) printf(" Eb/N0 = %1.3f dB. Es/N0 = %1.3f dB", 10.0f*logf(0.5f*N/(N-M)/(std_dev*std_dev))/logf(10.f), 10.0f*logf(0.5f/(std_dev*std_dev))/logf(10.f));
     printf("\nResidual BER %1.3e (%d/%lld)\n", float(resErr)/float(N)/nIt, resErr, int64_t(N)*nIt);
     if (gFalsePositive) {
